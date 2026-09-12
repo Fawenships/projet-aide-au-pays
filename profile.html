@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PNH Check — Profil</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        /* HEADER */
+        header {
+            background: #071a33;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            letter-spacing: .5px;
+        }
+
+        .logo span {
+            color: #3498db;
+        }
+
+        .back {
+            color: white;
+            text-decoration: none;
+            background: rgba(255,255,255,.1);
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: .2s;
+        }
+
+        .back:hover {
+            background: rgba(255,255,255,.18);
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #657083;
+        }
+
+        /* PROFILE */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(15, 35, 65, .07);
+            border: 1px solid #e7ebf1;
+        }
+
+        /* PROFILE CARD */
+        .profile-card {
+            text-align: center;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #eaf3ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            border: 4px solid #d5e9ff;
+        }
+
+        .profile-card h2 {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .role {
+            color: #64748b;
+            margin-bottom: 18px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #e9f9ef;
+            color: #198754;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        /* INFO */
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #edf0f4;
+        }
+
+        .info-label {
+            display: block;
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        .info-value {
+            font-weight: bold;
+        }
+
+        /* SECURITY */
+        .security {
+            margin-top: 25px;
+        }
+
+        .security-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 0;
+            border-bottom: 1px solid #edf0f4;
+            gap: 15px;
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .security-item h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .security-item p {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .btn-secondary {
+            background: #eef4fb;
+            color: #1769aa;
+        }
+
+        .btn-secondary:hover {
+            background: #dfeeff;
+        }
+
+        .btn-danger {
+            background: #fff0f0;
+            color: #c0392b;
+        }
+
+        .btn-danger:hover {
+            background: #ffe0e0;
+        }
+
+        /* ACTIVITY */
+        .activity {
+            margin-top: 25px;
+        }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .activity-box {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .activity-number {
+            display: block;
+            font-size: 27px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .activity-label {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        /* DEMO */
+        .demo {
+            margin-top: 25px;
+            padding: 18px;
+            background: #fff8e6;
+            border: 1px solid #ffe4a3;
+            border-radius: 12px;
+            color: #765500;
+        }
+
+        .demo strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #7a8494;
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+        @media (max-width: 800px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-list {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 15px 18px;
+            }
+
+            main {
+                margin-top: 25px;
+            }
+
+            .page-title h1 {
+                font-size: 25px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .logo {
+                font-size: 18px;
+            }
+
+            .back {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .security-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🚔 PNH <span>CHECK</span></div>
+
+    <a href="dashboard.html" class="back">
+        ← Dashboard
+    </a>
+</header>
+
+
+<main>
+
+    <div class="page-title">
+        <h1>Mon profil</h1>
+        <p>Informations et paramètres du compte utilisateur.</p>
+    </div>
+
+
+    <div class="profile-grid">
+
+        <!-- PROFIL -->
+        <div class="card profile-card">
+
+            <div class="avatar">
+                👮
+            </div>
+
+            <h2>Agent Démonstration</h2>
+
+            <p class="role">
+                Agent utilisateur
+            </p>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                Compte actif
+            </div>
+
+        </div>
+
+
+        <!-- INFORMATIONS -->
+        <div class="card">
+
+            <h2 class="section-title">
+                Informations du compte
+            </h2>
+
+            <div class="info-list">
+
+                <div class="info-item">
+                    <span class="info-label">
+                        Identifiant
+                    </span>
+
+                    <span class="info-value">
+                        DEMO-001
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">
+                        Rôle
+                    </span>
+
+                    <span class="info-value">
+                        Agent
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">
+                        Statut
+                    </span>
+
+                    <span class="info-value">
+                        Actif
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">
+                        Dernière activité
+                    </span>
+
+                    <span class="info-value">
+                        Aujourd'hui
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SÉCURITÉ -->
+    <div class="card security">
+
+        <h2 class="section-title">
+            Sécurité du compte
+        </h2>
+
+        <div class="security-item">
+
+            <div>
+                <h3>Mot de passe</h3>
+
+                <p>
+                    Le mot de passe est protégé par le système.
+                </p>
+            </div>
+
+            <button
+                class="btn-secondary"
+                onclick="demoMessage()">
+                Modifier
+            </button>
+
+        </div>
+
+
+        <div class="security-item">
+
+            <div>
+                <h3>Authentification</h3>
+
+                <p>
+                    Système d'authentification en mode démonstration.
+                </p>
+            </div>
+
+            <span class="status">
+                Activé
+            </span>
+
+        </div>
+
+
+        <div class="security-item">
+
+            <div>
+                <h3>Déconnexion</h3>
+
+                <p>
+                    Quitter la session actuelle.
+                </p>
+            </div>
+
+            <button
+                class="btn-danger"
+                onclick="logout()">
+                Déconnexion
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIVITÉ -->
+    <div class="card activity">
+
+        <h2 class="section-title">
+            Résumé de l'activité
+        </h2>
+
+        <div class="activity-grid">
+
+            <div class="activity-box">
+                <span class="activity-number">
+                    24
+                </span>
+
+                <span class="activity-label">
+                    Vérifications
+                </span>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-number">
+                    12
+                </span>
+
+                <span class="activity-label">
+                    Scans
+                </span>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-number">
+                    19
+                </span>
+
+                <span class="activity-label">
+                    Plaques trouvées
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MODE DEMO -->
+    <div class="demo">
+
+        <strong>⚠️ Mode démonstration</strong>
+
+        Toutes les informations affichées sur cette page
+        sont fictives. Aucun compte réel, aucune donnée
+        personnelle et aucune base de données de la PNH
+        ne sont connectés à cette version.
+
+    </div>
+
+</main>
+
+
+<footer>
+    PNH Check — Prototype de démonstration
+</footer>
+
+
+<script>
+
+function demoMessage() {
+
+    alert(
+        "La modification du mot de passe sera disponible lorsque le système d'authentification sera connecté au backend."
+    );
+
+}
+
+
+function logout() {
+
+    const confirmation = confirm(
+        "Voulez-vous quitter la session de démonstration ?"
+    );
+
+    if (confirmation) {
+        window.location.href = "login.html";
+    }
+
+}
+
+</script>
+
+</body>
+</html>
