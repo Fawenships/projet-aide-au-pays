@@ -1,0 +1,724 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connexion — PNH Check</title>
+
+    <meta
+        name="description"
+        content="Connexion au prototype PNH Check."
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ==============================
+           PAGE DE CONNEXION
+        ============================== */
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+
+            background:
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(85, 182, 255, 0.10),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #071a2d,
+                    #0d2d4d
+                );
+        }
+
+
+        .login-page {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 40px 20px;
+        }
+
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+
+        /* LOGO */
+
+        .login-logo {
+            text-align: center;
+            color: white;
+
+            margin-bottom: 25px;
+        }
+
+
+        .login-logo-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background: #12395d;
+
+            font-size: 34px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .login-logo h1 {
+            font-size: 25px;
+
+            letter-spacing: 1px;
+        }
+
+
+        .login-logo h1 span {
+            color: #55b6ff;
+        }
+
+
+        .login-logo p {
+            margin-top: 4px;
+
+            color: #9fb0c0;
+
+            font-size: 12px;
+        }
+
+
+        /* CARTE */
+
+        .login-card {
+            padding: 32px;
+
+            background: white;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .login-card h2 {
+            font-size: 24px;
+
+            color: #172033;
+        }
+
+
+        .login-card-description {
+            margin-top: 7px;
+
+            color: #718096;
+
+            font-size: 13px;
+        }
+
+
+        /* FORMULAIRE */
+
+        .login-form {
+            margin-top: 27px;
+        }
+
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #344054;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .form-input {
+            width: 100%;
+
+            height: 50px;
+
+            padding: 0 14px;
+
+            border: 1px solid #d5dde6;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            transition: 0.25s;
+        }
+
+
+        .form-input:focus {
+            border-color: #3297d3;
+
+            box-shadow:
+                0 0 0 4px rgba(
+                    50,
+                    151,
+                    211,
+                    0.10
+                );
+        }
+
+
+        /* MOT DE PASSE */
+
+        .password-container {
+            position: relative;
+        }
+
+
+        .password-container input {
+            padding-right: 50px;
+        }
+
+
+        .password-toggle {
+            position: absolute;
+
+            right: 10px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 35px;
+            height: 35px;
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            font-size: 17px;
+        }
+
+
+        /* OPTIONS */
+
+        .login-options {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin: 5px 0 22px;
+        }
+
+
+        .remember {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #667085;
+
+            font-size: 11px;
+        }
+
+
+        .remember input {
+            width: 14px;
+            height: 14px;
+        }
+
+
+        .forgot {
+            color: #126ca8;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: bold;
+        }
+
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+
+        /* BOUTON */
+
+        .login-submit {
+            width: 100%;
+
+            height: 50px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #126ca8;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+
+        .login-submit:hover {
+            background: #0d5b8e;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* MESSAGE */
+
+        .login-message {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+
+        .login-message.show {
+            display: block;
+        }
+
+
+        .login-message.warning {
+            background: #fff5e6;
+
+            color: #9a6200;
+
+            border: 1px solid #f2d39b;
+        }
+
+
+        /* AVERTISSEMENT */
+
+        .login-warning {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 20px;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            background: #f5f8fa;
+
+            border: 1px solid #e1e8ee;
+
+            color: #68778a;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+
+        .login-warning span {
+            font-size: 16px;
+        }
+
+
+        /* RETOUR */
+
+        .back-home {
+            display: block;
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #aebdcc;
+
+            text-decoration: none;
+
+            font-size: 12px;
+        }
+
+
+        .back-home:hover {
+            color: white;
+        }
+
+
+        /* FOOTER */
+
+        .login-footer {
+            padding: 20px;
+
+            text-align: center;
+
+            color: #708499;
+
+            font-size: 10px;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 500px) {
+
+            .login-card {
+                padding: 25px 20px;
+
+                border-radius: 16px;
+            }
+
+            .login-page {
+                padding: 25px 15px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <main class="login-page">
+
+        <div class="login-container">
+
+
+            <!-- LOGO -->
+
+            <div class="login-logo">
+
+                <div class="login-logo-icon">
+                    🚔
+                </div>
+
+                <h1>
+                    PNH <span>CHECK</span>
+                </h1>
+
+                <p>
+                    Système numérique de vérification
+                </p>
+
+            </div>
+
+
+            <!-- CARTE DE CONNEXION -->
+
+            <div class="login-card">
+
+                <h2>
+                    Connexion
+                </h2>
+
+                <p class="login-card-description">
+                    Connectez-vous pour accéder à votre espace.
+                </p>
+
+
+                <form
+                    class="login-form"
+                    id="loginForm"
+                >
+
+
+                    <!-- IDENTIFIANT -->
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            Identifiant
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            class="form-input"
+                            placeholder="Entrez votre identifiant"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- MOT DE PASSE -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Mot de passe
+                        </label>
+
+                        <div class="password-container">
+
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-input"
+                                placeholder="Entrez votre mot de passe"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword"
+                                aria-label="Afficher le mot de passe"
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- OPTIONS -->
+
+                    <div class="login-options">
+
+                        <label class="remember">
+
+                            <input
+                                type="checkbox"
+                                id="remember"
+                            >
+
+                            Se souvenir de moi
+
+                        </label>
+
+
+                        <a
+                            href="#"
+                            class="forgot"
+                            onclick="forgotPassword(event)"
+                        >
+                            Mot de passe oublié ?
+                        </a>
+
+                    </div>
+
+
+                    <!-- BOUTON -->
+
+                    <button
+                        type="submit"
+                        class="login-submit"
+                    >
+                        🔐 Se connecter
+                    </button>
+
+
+                    <!-- MESSAGE -->
+
+                    <div
+                        id="loginMessage"
+                        class="login-message warning"
+                    ></div>
+
+
+                </form>
+
+
+                <!-- AVERTISSEMENT -->
+
+                <div class="login-warning">
+
+                    <span>🛡️</span>
+
+                    <div>
+
+                        <strong>
+                            Accès contrôlé
+                        </strong>
+
+                        <br>
+
+                        Cette interface est un prototype.
+                        Les comptes réels et le système
+                        d'authentification seront ajoutés
+                        ultérieurement.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RETOUR -->
+
+            <a
+                href="index.html"
+                class="back-home"
+            >
+                ← Retour à l'accueil
+            </a>
+
+
+        </div>
+
+    </main>
+
+
+    <footer class="login-footer">
+
+        © 2026 PNH Check — Prototype de démonstration
+
+    </footer>
+
+
+    <script>
+
+        const password =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+
+        /* AFFICHER / CACHER LE MOT DE PASSE */
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    password.type === "password"
+                ) {
+
+                    password.type = "text";
+
+                    togglePassword.textContent = "🙈";
+
+                } else {
+
+                    password.type = "password";
+
+                    togglePassword.textContent = "👁️";
+
+                }
+
+            }
+        );
+
+
+        /* FORMULAIRE */
+
+        document
+            .getElementById("loginForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+                    const username =
+                        document
+                            .getElementById("username")
+                            .value
+                            .trim();
+
+                    const message =
+                        document
+                            .getElementById("loginMessage");
+
+
+                    if (!username) {
+
+                        message.textContent =
+                            "Veuillez entrer votre identifiant.";
+
+                        message.classList.add("show");
+
+                        return;
+                    }
+
+
+                    /*
+                     * Prototype uniquement.
+                     * Aucun vrai compte n'est vérifié ici.
+                     */
+
+                    message.textContent =
+                        "Le système d'authentification sera connecté au serveur dans une prochaine étape.";
+
+                    message.classList.add("show");
+
+                }
+            );
+
+
+        /* MOT DE PASSE OUBLIÉ */
+
+        function forgotPassword(event) {
+
+            event.preventDefault();
+
+            const message =
+                document
+                    .getElementById("loginMessage");
+
+            message.textContent =
+                "La récupération du compte sera disponible lorsque le système d'authentification sera configuré.";
+
+            message.classList.add("show");
+
+        }
+
+    </script>
+
+</body>
+</html>
+```
