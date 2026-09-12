@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Historique — PNH Check</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: #f4f7fa;
+            color: #172033;
+        }
+
+        .history-page {
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        .history-header {
+            height: 70px;
+            background: #071a2d;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .history-logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .history-logo span {
+            color: #55b6ff;
+        }
+
+        .history-logo-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+            background: #12395d;
+        }
+
+        .back-dashboard {
+            color: #b7c7d6;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .back-dashboard:hover {
+            color: white;
+        }
+
+        /* CONTENU */
+
+        .history-content {
+            max-width: 1100px;
+            width: 100%;
+
+            margin: auto;
+            padding: 40px 20px;
+
+            box-sizing: border-box;
+        }
+
+        .page-title {
+            margin-bottom: 28px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .page-title p {
+            margin-top: 7px;
+
+            color: #7c8998;
+            font-size: 12px;
+        }
+
+        /* TOOLBAR */
+
+        .history-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 18px;
+        }
+
+        .history-search {
+            flex: 1;
+            max-width: 400px;
+
+            height: 43px;
+
+            padding: 0 14px;
+
+            border: 1px solid #d7e0e7;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            background: white;
+
+            font-size: 12px;
+        }
+
+        .history-search:focus {
+            border-color: #2f80ed;
+
+            box-shadow:
+                0 0 0 3px rgba(47,128,237,.08);
+        }
+
+        .clear-button {
+            height: 43px;
+
+            padding: 0 16px;
+
+            border: 1px solid #d7e0e7;
+
+            border-radius: 9px;
+
+            background: white;
+
+            color: #526071;
+
+            cursor: pointer;
+
+            font-size: 11px;
+        }
+
+        .clear-button:hover {
+            border-color: #aebdca;
+        }
+
+        /* TABLE */
+
+        .history-card {
+            background: white;
+
+            border: 1px solid #e3e9ee;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 6px 25px rgba(20,50,70,.05);
+        }
+
+        .history-table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 750px;
+        }
+
+        thead {
+            background: #f7f9fb;
+        }
+
+        th {
+            padding: 14px 17px;
+
+            text-align: left;
+
+            color: #7c8998;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .3px;
+        }
+
+        td {
+            padding: 16px 17px;
+
+            border-top: 1px solid #edf0f3;
+
+            font-size: 12px;
+
+            color: #465466;
+        }
+
+        tbody tr:hover {
+            background: #fbfcfd;
+        }
+
+        .plate {
+            font-weight: bold;
+
+            letter-spacing: .5px;
+
+            color: #172033;
+        }
+
+        .vehicle {
+            font-weight: 600;
+        }
+
+        .date {
+            color: #7f8b99;
+            font-size: 11px;
+        }
+
+        /* STATUT */
+
+        .status {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 6px 9px;
+
+            border-radius: 20px;
+
+            font-size: 9px;
+
+            font-weight: bold;
+        }
+
+        .status-ok {
+            background: #e8f8f1;
+            color: #16805a;
+        }
+
+        .status-warning {
+            background: #fff4df;
+            color: #996400;
+        }
+
+        /* ACTION */
+
+        .view-button {
+            padding: 7px 10px;
+
+            border: 1px solid #d7e0e7;
+
+            border-radius: 7px;
+
+            background: white;
+
+            color: #126ca8;
+
+            cursor: pointer;
+
+            font-size: 10px;
+        }
+
+        .view-button:hover {
+            background: #edf6fc;
+        }
+
+        /* RESULTAT VIDE */
+
+        .empty-history {
+            display: none;
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            color: #8b98a6;
+        }
+
+        .empty-history.show {
+            display: block;
+        }
+
+        .empty-history-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .empty-history p {
+            font-size: 12px;
+        }
+
+        /* FOOTER INFO */
+
+        .history-info {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 15px;
+
+            color: #8a96a5;
+
+            font-size: 10px;
+        }
+
+        .demo-notice {
+            margin-top: 25px;
+
+            padding: 13px;
+
+            border-radius: 9px;
+
+            background: #fff8e8;
+
+            border: 1px solid #f0d79e;
+
+            color: #86651c;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .history-header {
+                padding: 0 17px;
+            }
+
+            .history-content {
+                padding: 30px 13px;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+            .history-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .history-search {
+                max-width: none;
+            }
+
+            .history-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="history-page">
+
+    <!-- HEADER -->
+
+    <header class="history-header">
+
+        <div class="history-logo">
+
+            <div class="history-logo-icon">
+                🚔
+            </div>
+
+            PNH <span>CHECK</span>
+
+        </div>
+
+        <a
+            href="dashboard.html"
+            class="back-dashboard"
+        >
+            ← Tableau de bord
+        </a>
+
+    </header>
+
+
+    <!-- CONTENU -->
+
+    <main class="history-content">
+
+        <div class="page-title">
+
+            <h1>
+                Historique des vérifications
+            </h1>
+
+            <p>
+                Consultez les recherches effectuées
+                dans le prototype.
+            </p>
+
+        </div>
+
+
+        <!-- BARRE D'OUTILS -->
+
+        <div class="history-toolbar">
+
+            <input
+                type="text"
+                id="historySearch"
+                class="history-search"
+                placeholder="🔎 Rechercher une plaque ou un véhicule..."
+            >
+
+            <button
+                class="clear-button"
+                onclick="clearSearch()"
+            >
+                Réinitialiser
+            </button>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <section class="history-card">
+
+            <div class="history-table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Plaque
+                            </th>
+
+                            <th>
+                                Véhicule
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Statut
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="historyBody">
+
+                        <tr>
+
+                            <td class="plate">
+                                HT-1234
+                            </td>
+
+                            <td class="vehicle">
+                                Toyota Corolla
+                            </td>
+
+                            <td>
+                                Automobile
+                            </td>
+
+                            <td class="date">
+                                Aujourd'hui, 09:42
+                            </td>
+
+                            <td>
+                                <span class="status status-ok">
+                                    ● ENREGISTRÉ
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    class="view-button"
+                                    onclick="showDetails('HT-1234')"
+                                >
+                                    Voir
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="plate">
+                                HT-5678
+                            </td>
+
+                            <td class="vehicle">
+                                Nissan Frontier
+                            </td>
+
+                            <td>
+                                Camionnette
+                            </td>
+
+                            <td class="date">
+                                Aujourd'hui, 10:17
+                            </td>
+
+                            <td>
+                                <span class="status status-ok">
+                                    ● ENREGISTRÉ
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    class="view-button"
+                                    onclick="showDetails('HT-5678')"
+                                >
+                                    Voir
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="plate">
+                                AA-2026
+                            </td>
+
+                            <td class="vehicle">
+                                Hyundai Tucson
+                            </td>
+
+                            <td>
+                                Automobile
+                            </td>
+
+                            <td class="date">
+                                Aujourd'hui, 11:05
+                            </td>
+
+                            <td>
+                                <span class="status status-warning">
+                                    ● À VÉRIFIER
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    class="view-button"
+                                    onclick="showDetails('AA-2026')"
+                                >
+                                    Voir
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="plate">
+                                HT-1234
+                            </td>
+
+                            <td class="vehicle">
+                                Toyota Corolla
+                            </td>
+
+                            <td>
+                                Automobile
+                            </td>
+
+                            <td class="date">
+                                Hier, 16:32
+                            </td>
+
+                            <td>
+                                <span class="status status-ok">
+                                    ● ENREGISTRÉ
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    class="view-button"
+                                    onclick="showDetails('HT-1234')"
+                                >
+                                    Voir
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- VIDE -->
+
+            <div
+                id="emptyHistory"
+                class="empty-history"
+            >
+
+                <div class="empty-history-icon">
+                    🔍
+                </div>
+
+                <strong>
+                    Aucun résultat
+                </strong>
+
+                <p>
+                    Aucune vérification ne correspond
+                    à votre recherche.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <div class="history-info">
+
+            <span>
+                4 vérifications affichées
+            </span>
+
+            <span>
+                Données de démonstration
+            </span>
+
+        </div>
+
+
+        <div class="demo-notice">
+
+            🛡️ <strong>Prototype de démonstration :</strong>
+            cet historique est fictif. Dans la version finale,
+            les données seront enregistrées dans une base de
+            données avec les autorisations nécessaires.
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* ==============================
+       RECHERCHE
+    ============================== */
+
+    const search =
+        document.getElementById("historySearch");
+
+    const rows =
+        document.querySelectorAll(
+            "#historyBody tr"
+        );
+
+    const empty =
+        document.getElementById(
+            "emptyHistory"
+        );
+
+
+    search.addEventListener(
+        "input",
+        function() {
+
+            const value =
+                this.value
+                    .trim()
+                    .toLowerCase();
+
+            let visibleRows = 0;
+
+
+            rows.forEach(row => {
+
+                const text =
+                    row.textContent
+                        .toLowerCase();
+
+
+                if (
+                    text.includes(value)
+                ) {
+
+                    row.style.display = "";
+                    visibleRows++;
+
+                } else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+
+            if (visibleRows === 0) {
+
+                empty.classList.add("show");
+
+            } else {
+
+                empty.classList.remove("show");
+
+            }
+
+        }
+    );
+
+
+    /* ==============================
+       RESET
+    ============================== */
+
+    function clearSearch() {
+
+        search.value = "";
+
+        rows.forEach(row => {
+
+            row.style.display = "";
+
+        });
+
+        empty.classList.remove("show");
+
+    }
+
+
+    /* ==============================
+       DETAILS
+    ============================== */
+
+    function showDetails(plate) {
+
+        alert(
+            "Détails de démonstration pour : "
+            + plate
+        );
+
+    }
+
+</script>
+
+</body>
+</html>
