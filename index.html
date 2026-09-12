@@ -3,121 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PNH Check — Vérification des plaques</title>
-    <link rel="stylesheet" href="style.css">
+
+    <title>PNH Check</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            color: #172033;
+        }
+
+        header {
+            background: #071a2d;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,.1);
+        }
+
+        h1 {
+            font-size: 40px;
+        }
+
+        p {
+            color: #687386;
+            font-size: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 25px;
+            background: #1764c0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 
 <body>
 
-<header class="header">
-    <div class="logo">🛡️ PNH CHECK</div>
-    <div class="header-right">Prototype de démonstration</div>
+<header>
+    🛡️ PNH CHECK
 </header>
 
-<main class="main">
-    <div class="container">
+<main>
 
-        <section class="card" style="margin-top:30px; text-align:center; padding:55px 25px;">
+    <div class="card">
 
-            <div style="font-size:60px;">🚔</div>
-
-            <h1 style="font-size:42px; margin:15px 0 10px;">
-                PNH Check
-            </h1>
-
-            <p style="font-size:20px; color:var(--muted);">
-                Vérifier une plaque. Obtenir une réponse.
-            </p>
-
-            <div class="notice" style="max-width:650px; margin:25px auto;">
-                ⚠️ <strong>Prototype :</strong>
-                cette version utilise uniquement des données fictives
-                pour démontrer le fonctionnement de l'application.
-            </div>
-
-            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-
-                <a href="login.html" class="btn">
-                    🔐 Accéder à l'application
-                </a>
-
-                <a href="verify.html" class="btn secondary">
-                    🔎 Essayer la vérification
-                </a>
-
-            </div>
-
-        </section>
-
-        <section style="margin-top:25px;">
-
-            <div class="stats">
-
-                <div class="stat">
-                    <div class="number">01</div>
-                    <div class="label">Saisir une plaque</div>
-                </div>
-
-                <div class="stat">
-                    <div class="number">02</div>
-                    <div class="label">Rechercher</div>
-                </div>
-
-                <div class="stat">
-                    <div class="number">03</div>
-                    <div class="label">Vérifier</div>
-                </div>
-
-                <div class="stat">
-                    <div class="number">04</div>
-                    <div class="label">Obtenir le résultat</div>
-                </div>
-
-            </div>
-
-        </section>
-
-        <section class="card" style="margin-top:25px;">
-
-            <h2>Comment fonctionne PNH Check ?</h2>
-
-            <div class="actions">
-
-                <div class="action">
-                    <div class="action-icon">⌨️</div>
-                    <h3>Saisie</h3>
-                    <p>
-                        L'utilisateur saisit le numéro de plaque.
-                    </p>
-                </div>
-
-                <div class="action">
-                    <div class="action-icon">📷</div>
-                    <h3>Scan</h3>
-                    <p>
-                        Une future version pourra utiliser la caméra
-                        et la reconnaissance automatique.
-                    </p>
-                </div>
-
-                <div class="action">
-                    <div class="action-icon">🔐</div>
-                    <h3>Vérification</h3>
-                    <p>
-                        Le système recherche les informations
-                        correspondantes dans une base autorisée.
-                    </p>
-                </div>
-
-            </div>
-
-        </section>
-
-        <div class="footer">
-            PNH Check — Prototype indépendant • Données fictives
+        <div style="font-size:60px;">
+            🚔
         </div>
 
+        <h1>PNH Check</h1>
+
+        <p>
+            Vérifier une plaque. Obtenir une réponse.
+        </p>
+
+        <p>
+            Prototype de démonstration avec données fictives.
+        </p>
+
+        <a href="login.html" class="btn">
+            Accéder à l'application
+        </a>
+
     </div>
+
 </main>
 
 </body>
