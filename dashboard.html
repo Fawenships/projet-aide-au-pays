@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tableau de bord — PNH Check</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ==============================
+           DASHBOARD
+        ============================== */
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f4f7fa;
+            color: #172033;
+        }
+
+        .dashboard {
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        .dashboard-header {
+            height: 70px;
+            background: #071a2d;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+            box-sizing: border-box;
+        }
+
+        .dashboard-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .dashboard-logo-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+            background: #12395d;
+
+            font-size: 21px;
+        }
+
+        .dashboard-logo span {
+            color: #55b6ff;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            font-size: 11px;
+            color: #aebdcc;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+            background: #31c48d;
+        }
+
+        .agent {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding-left: 18px;
+            border-left: 1px solid rgba(255,255,255,.15);
+        }
+
+        .agent-avatar {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #1764c0;
+        }
+
+        .agent-info strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .agent-info small {
+            color: #9fb0c0;
+            font-size: 10px;
+        }
+
+        /* LAYOUT */
+
+        .dashboard-layout {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 235px;
+
+            background: white;
+
+            border-right: 1px solid #e2e8ee;
+
+            padding: 25px 15px;
+
+            box-sizing: border-box;
+        }
+
+        .sidebar-title {
+            padding: 0 12px;
+            margin-bottom: 12px;
+
+            color: #98a2b3;
+
+            font-size: 10px;
+            font-weight: bold;
+
+            text-transform: uppercase;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 13px 12px;
+
+            margin-bottom: 5px;
+
+            border-radius: 9px;
+
+            color: #526071;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition: .2s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #eaf5fc;
+            color: #126ca8;
+        }
+
+        .sidebar-icon {
+            width: 23px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: 35px;
+            padding: 12px;
+
+            border-top: 1px solid #edf0f2;
+        }
+
+        .demo-label {
+            padding: 10px;
+
+            border-radius: 8px;
+
+            background: #fff8e8;
+            color: #967019;
+
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        /* MAIN */
+
+        .dashboard-main {
+            flex: 1;
+            padding: 32px;
+
+            overflow: hidden;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin: 0;
+
+            font-size: 27px;
+        }
+
+        .welcome p {
+            margin-top: 7px;
+
+            color: #758295;
+            font-size: 13px;
+        }
+
+        /* STATISTIQUES */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+
+            border: 1px solid #e5ebf0;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 5px 20px rgba(18, 48, 70, .04);
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: #edf6fc;
+
+            font-size: 19px;
+        }
+
+        .stat-card small {
+            color: #8491a2;
+            font-size: 11px;
+        }
+
+        .stat-card strong {
+            display: block;
+
+            margin-top: 10px;
+
+            font-size: 24px;
+        }
+
+        .stat-change {
+            display: block;
+
+            margin-top: 5px;
+
+            color: #31a875;
+
+            font-size: 10px;
+        }
+
+        /* ACTIONS */
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .section-title span {
+            color: #8a96a5;
+            font-size: 11px;
+        }
+
+        .actions-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .action-card {
+            padding: 23px;
+
+            background: white;
+
+            border: 1px solid #e5ebf0;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            transition: .25s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+
+            border-color: #9ed3ef;
+
+            box-shadow:
+                0 10px 25px rgba(18, 48, 70, .08);
+        }
+
+        .action-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #eaf5fc;
+
+            font-size: 22px;
+
+            margin-bottom: 15px;
+        }
+
+        .action-card h3 {
+            margin: 0;
+
+            font-size: 14px;
+        }
+
+        .action-card p {
+            margin: 7px 0 0;
+
+            color: #8491a2;
+
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* RECHERCHE RAPIDE */
+
+        .quick-search {
+            background: #071a2d;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            color: white;
+
+            margin-bottom: 25px;
+        }
+
+        .quick-search h2 {
+            margin: 0 0 5px;
+
+            font-size: 17px;
+        }
+
+        .quick-search p {
+            margin: 0 0 17px;
+
+            color: #a9bac9;
+
+            font-size: 11px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-row input {
+            flex: 1;
+
+            height: 47px;
+
+            padding: 0 15px;
+
+            border: none;
+            outline: none;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+        }
+
+        .search-row button {
+            border: none;
+
+            padding: 0 22px;
+
+            border-radius: 8px;
+
+            background: #2f80ed;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .search-row button:hover {
+            background: #236acb;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .actions-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .dashboard-header {
+                padding: 0 18px;
+            }
+
+            .system-status,
+            .agent-info {
+                display: none;
+            }
+
+            .sidebar {
+                width: 65px;
+                padding: 20px 8px;
+            }
+
+            .sidebar-title,
+            .sidebar a span:not(.sidebar-icon),
+            .sidebar-bottom {
+                display: none;
+            }
+
+            .sidebar a {
+                justify-content: center;
+                padding: 13px 5px;
+            }
+
+            .dashboard-main {
+                padding: 22px 16px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .stats-grid,
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-main {
+                padding: 20px 13px;
+            }
+
+            .welcome h1 {
+                font-size: 22px;
+            }
+
+            .search-row {
+                flex-direction: column;
+            }
+
+            .search-row button {
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- HEADER -->
+
+    <header class="dashboard-header">
+
+        <div class="dashboard-logo">
+
+            <div class="dashboard-logo-icon">
+                🚔
+            </div>
+
+            <div>
+                PNH <span>CHECK</span>
+            </div>
+
+        </div>
+
+
+        <div class="header-right">
+
+            <div class="system-status">
+
+                <div class="status-dot"></div>
+
+                Système opérationnel
+
+            </div>
+
+
+            <div class="agent">
+
+                <div class="agent-avatar">
+                    👮
+                </div>
+
+                <div class="agent-info">
+
+                    <strong>Agent Démonstration</strong>
+
+                    <small>Compte prototype</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <div class="dashboard-layout">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-title">
+                Navigation
+            </div>
+
+
+            <a
+                href="dashboard.html"
+                class="active"
+            >
+                <span class="sidebar-icon">📊</span>
+                <span>Tableau de bord</span>
+            </a>
+
+
+            <a href="verify.html">
+
+                <span class="sidebar-icon">🔎</span>
+                <span>Vérifier une plaque</span>
+
+            </a>
+
+
+            <a href="scanner.html">
+
+                <span class="sidebar-icon">📷</span>
+                <span>Scanner</span>
+
+            </a>
+
+
+            <a href="history.html">
+
+                <span class="sidebar-icon">📋</span>
+                <span>Historique</span>
+
+            </a>
+
+
+            <div class="sidebar-title"
+                 style="margin-top:25px;">
+                Compte
+            </div>
+
+
+            <a href="profile.html">
+
+                <span class="sidebar-icon">👤</span>
+                <span>Profil</span>
+
+            </a>
+
+
+            <a href="index.html">
+
+                <span class="sidebar-icon">↩️</span>
+                <span>Accueil</span>
+
+            </a>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="demo-label">
+
+                    🛡️ <strong>MODE DÉMO</strong>
+
+                    <br><br>
+
+                    Toutes les informations
+                    affichées sont fictives.
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CONTENU -->
+
+        <main class="dashboard-main">
+
+
+            <div class="welcome">
+
+                <h1>
+                    Tableau de bord
+                </h1>
+
+                <p>
+                    Bienvenue sur l'espace de gestion de PNH Check.
+                </p>
+
+            </div>
+
+
+            <!-- STATISTIQUES -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <small>
+                            Vérifications aujourd'hui
+                        </small>
+
+                        <div class="stat-icon">
+                            🔎
+                        </div>
+
+                    </div>
+
+                    <strong>24</strong>
+
+                    <span class="stat-change">
+                        ↑ Donnée de démonstration
+                    </span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <small>
+                            Plaques trouvées
+                        </small>
+
+                        <div class="stat-icon">
+                            🚗
+                        </div>
+
+                    </div>
+
+                    <strong>19</strong>
+
+                    <span class="stat-change">
+                        ↑ Donnée de démonstration
+                    </span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <small>
+                            À vérifier
+                        </small>
+
+                        <div class="stat-icon">
+                            ⚠️
+                        </div>
+
+                    </div>
+
+                    <strong>3</strong>
+
+                    <span class="stat-change">
+                        Donnée de démonstration
+                    </span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <small>
+                            Scans effectués
+                        </small>
+
+                        <div class="stat-icon">
+                            📷
+                        </div>
+
+                    </div>
+
+                    <strong>12</strong>
+
+                    <span class="stat-change">
+                        ↑ Donnée de démonstration
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="section-title">
+
+                <h2>
+                    Actions rapides
+                </h2>
+
+                <span>
+                    Prototype
+                </span>
+
+            </div>
+
+
+            <div class="actions-grid">
+
+
+                <a
+                    href="verify.html"
+                    class="action-card"
+                >
+
+                    <div class="action-icon">
+                        🔎
+                    </div>
+
+                    <h3>
+                        Vérifier une plaque
+                    </h3>
+
+                    <p>
+                        Rechercher rapidement une plaque
+                        dans les données de démonstration.
+                    </p>
+
+                </a>
+
+
+                <a
+                    href="scanner.html"
+                    class="action-card"
+                >
+
+                    <div class="action-icon">
+                        📷
+                    </div>
+
+                    <h3>
+                        Scanner une plaque
+                    </h3>
+
+                    <p>
+                        Accéder à l'interface de
+                        reconnaissance de plaque.
+                    </p>
+
+                </a>
+
+
+                <a
+                    href="history.html"
+                    class="action-card"
+                >
+
+                    <div class="action-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        Consulter l'historique
+                    </h3>
+
+                    <p>
+                        Visualiser les vérifications
+                        effectuées dans le prototype.
+                    </p>
+
+                </a>
+
+            </div>
+
+
+            <!-- RECHERCHE RAPIDE -->
+
+            <section class="quick-search">
+
+                <h2>
+                    Vérification rapide
+                </h2>
+
+                <p>
+                    Entrez une plaque de démonstration.
+                </p>
+
+
+                <div class="search-row">
+
+                    <input
+                        type="text"
+                        id="dashboardPlate"
+                        placeholder="Exemple : HT-1234"
+                    >
+
+
+                    <button
+                        onclick="quickVerify()"
+                    >
+                        Vérifier
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="quickResult"
+                    style="
+                        margin-top:15px;
+                        display:none;
+                        padding:13px;
+                        border-radius:8px;
+                        background:#12395d;
+                        font-size:12px;
+                    "
+                ></div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /*
+     * DONNÉES DE DÉMONSTRATION
+     * Aucune base réelle n'est utilisée.
+     */
+
+    const demoVehicles = {
+
+        "HT-1234": {
+            vehicle: "Toyota Corolla",
+            type: "Automobile",
+            status: "Enregistré"
+        },
+
+        "HT-5678": {
+            vehicle: "Nissan Frontier",
+            type: "Camionnette",
+            status: "Enregistré"
+        },
+
+        "AA-2026": {
+            vehicle: "Hyundai Tucson",
+            type: "Automobile",
+            status: "À vérifier"
+        }
+
+    };
+
+
+    function quickVerify() {
+
+        const input =
+            document.getElementById(
+                "dashboardPlate"
+            );
+
+        const result =
+            document.getElementById(
+                "quickResult"
+            );
+
+
+        const plate =
+            input.value
+                .trim()
+                .toUpperCase();
+
+
+        if (!plate) {
+
+            result.style.display = "block";
+
+            result.textContent =
+                "Veuillez entrer une plaque.";
+
+            return;
+        }
+
+
+        const vehicle =
+            demoVehicles[plate];
+
+
+        result.style.display = "block";
+
+
+        if (!vehicle) {
+
+            result.innerHTML =
+                "❌ Plaque non trouvée dans les données de démonstration.";
+
+            return;
+        }
+
+
+        result.innerHTML = `
+            🚗 <strong>${vehicle.vehicle}</strong><br>
+            Plaque : ${plate}<br>
+            Type : ${vehicle.type}<br>
+            Statut : ${vehicle.status}
+        `;
+
+    }
+
+
+    /* ENTER = RECHERCHE */
+
+    document
+        .getElementById("dashboardPlate")
+        .addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    quickVerify();
+
+                }
+
+            }
+        );
+
+</script>
+
+</body>
+</html>
