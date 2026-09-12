@@ -1,0 +1,454 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PNH Check — Vérification des véhicules</title>
+
+    <meta
+        name="description"
+        content="Prototype de système numérique de vérification des plaques de véhicules."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         BARRE DE NAVIGATION
+    ========================== -->
+    <header class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">🚔</div>
+
+            <div>
+                <h1>PNH <span>CHECK</span></h1>
+                <p>Système de vérification</p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#accueil">Accueil</a>
+            <a href="#fonctionnement">Fonctionnement</a>
+            <a href="#securite">Sécurité</a>
+        </nav>
+
+        <button class="login-btn" onclick="openLogin()">
+            🔐 Connexion
+        </button>
+
+    </header>
+
+
+    <!-- =========================
+         SECTION HERO
+    ========================== -->
+    <main>
+
+        <section id="accueil" class="hero">
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    ● SYSTÈME NUMÉRIQUE
+                </div>
+
+                <h2>
+                    Vérifier une plaque.
+                    <br>
+                    <span>Obtenir une réponse.</span>
+                </h2>
+
+                <p class="hero-description">
+                    Une interface numérique conçue pour faciliter
+                    la vérification des informations associées
+                    aux véhicules autorisés.
+                </p>
+
+                <!-- =========================
+                     CARTE DE RECHERCHE
+                ========================== -->
+
+                <div class="search-card">
+
+                    <div class="search-header">
+                        <div>
+                            <h3>🔎 Vérifier une plaque</h3>
+                            <p>Entrez le numéro de plaque du véhicule.</p>
+                        </div>
+
+                        <div class="status-dot">
+                            <span></span> Système actif
+                        </div>
+                    </div>
+
+
+                    <div class="search-box">
+
+                        <label for="plate">
+                            Numéro de plaque
+                        </label>
+
+                        <div class="input-container">
+
+                            <span class="input-icon">🚗</span>
+
+                            <input
+                                type="text"
+                                id="plate"
+                                placeholder="Ex. HT-1234"
+                                maxlength="15"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            class="primary-btn"
+                            onclick="verifyPlate()"
+                        >
+                            🔍 Vérifier la plaque
+                        </button>
+
+                        <button
+                            class="secondary-btn"
+                            onclick="scanPlate()"
+                        >
+                            📷 Scanner
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     MESSAGE DE DÉMONSTRATION
+                ========================== -->
+
+                <div class="demo-notice">
+                    <span>ℹ️</span>
+
+                    <div>
+                        <strong>Prototype de démonstration</strong>
+
+                        <p>
+                            Les données utilisées dans cette version
+                            sont fictives et servent uniquement
+                            à présenter le fonctionnement du système.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 STATISTIQUES
+            ========================== -->
+
+            <div class="hero-stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon">🔐</div>
+                    <div>
+                        <strong>Accès sécurisé</strong>
+                        <p>Utilisateurs autorisés</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div>
+                        <strong>Recherche rapide</strong>
+                        <p>Résultats instantanés</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div>
+                        <strong>Traçabilité</strong>
+                        <p>Consultations enregistrées</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FONCTIONNEMENT
+        ========================== -->
+
+        <section id="fonctionnement" class="section">
+
+            <div class="section-title">
+
+                <div class="section-badge">
+                    COMMENT ÇA MARCHE ?
+                </div>
+
+                <h2>
+                    Une vérification en
+                    <span>quelques étapes</span>
+                </h2>
+
+                <p>
+                    Le système est conçu pour simplifier
+                    la recherche tout en maintenant un contrôle
+                    strict des accès.
+                </p>
+
+            </div>
+
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">⌨️</div>
+
+                    <h3>Saisir</h3>
+
+                    <p>
+                        L'agent saisit le numéro de la plaque
+                        ou utilise le scanner.
+                    </p>
+                </div>
+
+
+                <div class="arrow">→</div>
+
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">🔎</div>
+
+                    <h3>Rechercher</h3>
+
+                    <p>
+                        Le système vérifie les informations
+                        disponibles dans la base autorisée.
+                    </p>
+                </div>
+
+
+                <div class="arrow">→</div>
+
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">✅</div>
+
+                    <h3>Résultat</h3>
+
+                    <p>
+                        Le résultat de la vérification
+                        est affiché à l'utilisateur autorisé.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SÉCURITÉ
+        ========================== -->
+
+        <section id="securite" class="security-section">
+
+            <div class="security-content">
+
+                <div class="section-badge">
+                    🔐 SÉCURITÉ
+                </div>
+
+                <h2>
+                    La sécurité au
+                    <span>centre du système.</span>
+                </h2>
+
+                <p>
+                    L'accès aux informations doit être limité
+                    aux utilisateurs autorisés. Chaque consultation
+                    pourra être enregistrée afin d'assurer
+                    la traçabilité du système.
+                </p>
+
+            </div>
+
+
+            <div class="security-items">
+
+                <div>
+                    <span>🔑</span>
+                    <strong>Authentification</strong>
+                    <p>Identification des utilisateurs.</p>
+                </div>
+
+                <div>
+                    <span>🛡️</span>
+                    <strong>Permissions</strong>
+                    <p>Accès selon le rôle de l'utilisateur.</p>
+                </div>
+
+                <div>
+                    <span>📝</span>
+                    <strong>Journalisation</strong>
+                    <p>Historique des consultations.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            🚔 <strong>PNH CHECK</strong>
+        </div>
+
+        <p>
+            Prototype de système numérique de vérification des véhicules.
+        </p>
+
+        <div class="footer-bottom">
+            © 2026 — Prototype de démonstration
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         MODAL CONNEXION
+    ========================== -->
+
+    <div id="loginModal" class="modal">
+
+        <div class="modal-content">
+
+            <button class="close-btn" onclick="closeLogin()">
+                ×
+            </button>
+
+            <div class="modal-icon">
+                🔐
+            </div>
+
+            <h2>Connexion</h2>
+
+            <p>
+                Cette section sera reliée au système
+                d'authentification dans une prochaine version.
+            </p>
+
+            <label>Identifiant</label>
+            <input
+                type="text"
+                placeholder="Votre identifiant"
+            >
+
+            <label>Mot de passe</label>
+            <input
+                type="password"
+                placeholder="Votre mot de passe"
+            >
+
+            <button class="primary-btn">
+                Se connecter
+            </button>
+
+            <small>
+                Accès réservé aux utilisateurs autorisés.
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT TEMPORAIRE
+    ========================== -->
+
+    <script>
+
+        function openLogin() {
+            document
+                .getElementById("loginModal")
+                .classList.add("active");
+        }
+
+
+        function closeLogin() {
+            document
+                .getElementById("loginModal")
+                .classList.remove("active");
+        }
+
+
+        function verifyPlate() {
+
+            const plate =
+                document
+                    .getElementById("plate")
+                    .value
+                    .trim();
+
+            if (!plate) {
+                alert("Veuillez entrer un numéro de plaque.");
+                return;
+            }
+
+            alert(
+                "Prototype : recherche de la plaque " +
+                plate +
+                "."
+            );
+        }
+
+
+        function scanPlate() {
+
+            alert(
+                "Le scanner caméra/OCR sera ajouté dans la prochaine étape."
+            );
+        }
+
+
+        window.onclick = function(event) {
+
+            const modal =
+                document.getElementById("loginModal");
+
+            if (event.target === modal) {
+                closeLogin();
+            }
+
+        };
+
+    </script>
+
+</body>
+</html>
+```
