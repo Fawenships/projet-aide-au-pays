@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scanner — PNH Check</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: #f4f7fa;
+            color: #172033;
+        }
+
+        .scanner-page {
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        .scanner-header {
+            height: 70px;
+            background: #071a2d;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .scanner-logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .scanner-logo span {
+            color: #55b6ff;
+        }
+
+        .scanner-logo-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+            background: #12395d;
+        }
+
+        .back-dashboard {
+            color: #b7c7d6;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .back-dashboard:hover {
+            color: white;
+        }
+
+        /* CONTENU */
+
+        .scanner-content {
+            width: 100%;
+            max-width: 950px;
+
+            margin: auto;
+
+            padding: 40px 20px;
+
+            box-sizing: border-box;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 29px;
+        }
+
+        .page-title p {
+            margin-top: 8px;
+
+            color: #788697;
+            font-size: 13px;
+        }
+
+        /* GRID */
+
+        .scanner-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.2fr .8fr;
+
+            gap: 20px;
+        }
+
+        /* CAMERA */
+
+        .camera-card {
+            background: #071a2d;
+
+            border-radius: 18px;
+
+            padding: 22px;
+
+            color: white;
+        }
+
+        .camera-header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .camera-header h2 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .camera-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            color: #9fb0c0;
+            font-size: 10px;
+        }
+
+        .camera-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #8b98a6;
+        }
+
+        .camera-frame {
+            position: relative;
+
+            min-height: 360px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border: 2px dashed #35536e;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    45deg,
+                    #0a2238,
+                    #102d47
+                );
+        }
+
+        .camera-placeholder {
+            text-align: center;
+
+            color: #8da2b5;
+        }
+
+        .camera-icon {
+            font-size: 55px;
+
+            margin-bottom: 15px;
+        }
+
+        .camera-placeholder h3 {
+            margin: 0;
+
+            color: white;
+            font-size: 16px;
+        }
+
+        .camera-placeholder p {
+            max-width: 270px;
+
+            margin: 8px auto 0;
+
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* CADRE DE DETECTION */
+
+        .scan-box {
+            position: absolute;
+
+            width: 65%;
+            height: 100px;
+
+            border: 2px solid #55b6ff;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 0 25px rgba(85,182,255,.12);
+        }
+
+        .scan-corner {
+            position: absolute;
+
+            width: 18px;
+            height: 18px;
+
+            border-color: #55b6ff;
+            border-style: solid;
+        }
+
+        .corner-tl {
+            top: -2px;
+            left: -2px;
+            border-width: 3px 0 0 3px;
+        }
+
+        .corner-tr {
+            top: -2px;
+            right: -2px;
+            border-width: 3px 3px 0 0;
+        }
+
+        .corner-bl {
+            bottom: -2px;
+            left: -2px;
+            border-width: 0 0 3px 3px;
+        }
+
+        .corner-br {
+            bottom: -2px;
+            right: -2px;
+            border-width: 0 3px 3px 0;
+        }
+
+        /* CONTROLES */
+
+        .camera-controls {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 15px;
+        }
+
+        .camera-button {
+            flex: 1;
+
+            height: 45px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            font-size: 12px;
+        }
+
+        .primary-button {
+            background: #2f80ed;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background: #236acb;
+        }
+
+        .secondary-button {
+            background: #173750;
+            color: #d2e0eb;
+        }
+
+        .secondary-button:hover {
+            background: #214866;
+        }
+
+        /* RESULTAT */
+
+        .result-card {
+            background: white;
+
+            border: 1px solid #e3e9ee;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 8px 30px rgba(20,50,70,.05);
+        }
+
+        .result-card h2 {
+            margin: 0;
+
+            font-size: 17px;
+        }
+
+        .result-description {
+            margin: 7px 0 20px;
+
+            color: #8793a2;
+
+            font-size: 11px;
+        }
+
+        .plate-result {
+            display: none;
+
+            text-align: center;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            background: #f6f9fb;
+
+            border: 1px solid #e4ebf0;
+        }
+
+        .plate-result.show {
+            display: block;
+        }
+
+        .plate-number {
+            display: inline-block;
+
+            padding: 12px 20px;
+
+            border: 2px solid #172033;
+
+            border-radius: 7px;
+
+            background: white;
+
+            font-size: 22px;
+            font-weight: bold;
+
+            letter-spacing: 2px;
+        }
+
+        .result-status {
+            margin-top: 15px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .result-details {
+            margin-top: 18px;
+
+            text-align: left;
+        }
+
+        .detail {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid #edf0f3;
+
+            font-size: 11px;
+        }
+
+        .detail span:first-child {
+            color: #8a96a5;
+        }
+
+        .detail strong {
+            color: #344054;
+        }
+
+        .empty-result {
+            padding: 55px 20px;
+
+            text-align: center;
+
+            color: #96a2b0;
+        }
+
+        .empty-result div {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .empty-result p {
+            margin: 0;
+
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* AVERTISSEMENT */
+
+        .demo-notice {
+            margin-top: 20px;
+
+            padding: 13px;
+
+            border-radius: 9px;
+
+            background: #fff8e8;
+
+            border: 1px solid #f0d79e;
+
+            color: #86651c;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 750px) {
+
+            .scanner-header {
+                padding: 0 17px;
+            }
+
+            .scanner-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .camera-frame {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .scanner-content {
+                padding: 30px 13px;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+            .camera-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="scanner-page">
+
+    <!-- HEADER -->
+
+    <header class="scanner-header">
+
+        <div class="scanner-logo">
+
+            <div class="scanner-logo-icon">
+                🚔
+            </div>
+
+            PNH <span>CHECK</span>
+
+        </div>
+
+        <a
+            href="dashboard.html"
+            class="back-dashboard"
+        >
+            ← Tableau de bord
+        </a>
+
+    </header>
+
+
+    <!-- CONTENU -->
+
+    <main class="scanner-content">
+
+        <div class="page-title">
+
+            <h1>
+                Scanner une plaque
+            </h1>
+
+            <p>
+                Capturez une image pour simuler
+                la reconnaissance d'une plaque.
+            </p>
+
+        </div>
+
+
+        <div class="scanner-grid">
+
+
+            <!-- CAMERA -->
+
+            <section class="camera-card">
+
+                <div class="camera-header">
+
+                    <h2>
+                        📷 Zone de scan
+                    </h2>
+
+                    <div class="camera-status">
+
+                        <div class="camera-dot"></div>
+
+                        Caméra non connectée
+
+                    </div>
+
+                </div>
+
+
+                <div class="camera-frame">
+
+                    <div class="scan-box">
+
+                        <div class="scan-corner corner-tl"></div>
+                        <div class="scan-corner corner-tr"></div>
+                        <div class="scan-corner corner-bl"></div>
+                        <div class="scan-corner corner-br"></div>
+
+                    </div>
+
+
+                    <div class="camera-placeholder">
+
+                        <div class="camera-icon">
+                            📷
+                        </div>
+
+                        <h3>
+                            Zone de reconnaissance
+                        </h3>
+
+                        <p>
+                            Le module caméra et la
+                            reconnaissance OCR seront
+                            intégrés ultérieurement.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="camera-controls">
+
+                    <button
+                        class="camera-button primary-button"
+                        onclick="simulateScan()"
+                    >
+                        📷 Simuler un scan
+                    </button>
+
+                    <button
+                        class="camera-button secondary-button"
+                        onclick="resetScan()"
+                    >
+                        ↻ Réinitialiser
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- RESULTAT -->
+
+            <section class="result-card">
+
+                <h2>
+                    Résultat
+                </h2>
+
+                <p class="result-description">
+                    La plaque reconnue apparaîtra ici.
+                </p>
+
+
+                <div
+                    id="emptyResult"
+                    class="empty-result"
+                >
+
+                    <div>
+                        🔍
+                    </div>
+
+                    <p>
+                        Aucun scan effectué.<br>
+                        Lancez un scan de démonstration.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="plateResult"
+                    class="plate-result"
+                >
+
+                    <div class="plate-number">
+                        <span id="plateNumber">
+                            --
+                        </span>
+                    </div>
+
+
+                    <div
+                        id="resultStatus"
+                        class="result-status"
+                    >
+                    </div>
+
+
+                    <div class="result-details">
+
+                        <div class="detail">
+
+                            <span>
+                                Véhicule
+                            </span>
+
+                            <strong id="vehicleName">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Type
+                            </span>
+
+                            <strong id="vehicleType">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Année
+                            </span>
+
+                            <strong id="vehicleYear">
+                                --
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <div class="demo-notice">
+
+            🛡️ <strong>Prototype de démonstration :</strong>
+            le scan affiché est simulé. Aucune caméra,
+            reconnaissance OCR ou base de données réelle
+            de la PNH n'est utilisée.
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /*
+     * DONNÉES FICTIVES UNIQUEMENT
+     */
+
+    const demoVehicles = [
+
+        {
+            plate: "HT-1234",
+            vehicle: "Toyota Corolla",
+            type: "Automobile",
+            year: "2022",
+            status: "ENREGISTRÉ"
+        },
+
+        {
+            plate: "HT-5678",
+            vehicle: "Nissan Frontier",
+            type: "Camionnette",
+            year: "2021",
+            status: "ENREGISTRÉ"
+        },
+
+        {
+            plate: "AA-2026",
+            vehicle: "Hyundai Tucson",
+            type: "Automobile",
+            year: "2023",
+            status: "À VÉRIFIER"
+        }
+
+    ];
+
+
+    /* ==============================
+       SIMULATION DU SCAN
+    ============================== */
+
+    function simulateScan() {
+
+        const randomIndex =
+            Math.floor(
+                Math.random() *
+                demoVehicles.length
+            );
+
+        const vehicle =
+            demoVehicles[randomIndex];
+
+
+        document.getElementById(
+            "emptyResult"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "plateResult"
+        ).classList.add("show");
+
+
+        document.getElementById(
+            "plateNumber"
+        ).textContent = vehicle.plate;
+
+
+        document.getElementById(
+            "vehicleName"
+        ).textContent = vehicle.vehicle;
+
+
+        document.getElementById(
+            "vehicleType"
+        ).textContent = vehicle.type;
+
+
+        document.getElementById(
+            "vehicleYear"
+        ).textContent = vehicle.year;
+
+
+        const status =
+            document.getElementById(
+                "resultStatus"
+            );
+
+
+        status.textContent =
+            vehicle.status;
+
+
+        if (vehicle.status === "ENREGISTRÉ") {
+
+            status.style.color = "#16805a";
+
+        } else {
+
+            status.style.color = "#9a6500";
+
+        }
+
+    }
+
+
+    /* ==============================
+       RESET
+    ============================== */
+
+    function resetScan() {
+
+        document.getElementById(
+            "plateResult"
+        ).classList.remove("show");
+
+
+        document.getElementById(
+            "emptyResult"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "plateNumber"
+        ).textContent = "--";
+
+    }
+
+</script>
+
+</body>
+</html>
