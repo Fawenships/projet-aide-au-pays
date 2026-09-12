@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vérifier une plaque — PNH Check</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: #f4f7fa;
+            color: #172033;
+        }
+
+        .verify-page {
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        .verify-header {
+            height: 70px;
+            background: #071a2d;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .verify-logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .verify-logo span {
+            color: #55b6ff;
+        }
+
+        .verify-logo-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+            background: #12395d;
+        }
+
+        .back-dashboard {
+            color: #b7c7d6;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .back-dashboard:hover {
+            color: white;
+        }
+
+        /* CONTENU */
+
+        .verify-content {
+            width: 100%;
+            max-width: 900px;
+
+            margin: auto;
+
+            padding: 45px 20px;
+
+            box-sizing: border-box;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 29px;
+        }
+
+        .page-title p {
+            color: #788697;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        /* CARTE DE RECHERCHE */
+
+        .search-card {
+            background: white;
+
+            border: 1px solid #e3e9ee;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 8px 30px rgba(20, 50, 70, .06);
+        }
+
+        .search-card h2 {
+            margin: 0 0 7px;
+
+            font-size: 18px;
+        }
+
+        .search-card > p {
+            margin: 0 0 22px;
+
+            color: #8491a2;
+
+            font-size: 12px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+
+            height: 53px;
+
+            padding: 0 17px;
+
+            border: 1px solid #d5dde6;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 16px;
+
+            text-transform: uppercase;
+        }
+
+        .search-box input:focus {
+            border-color: #2f80ed;
+
+            box-shadow:
+                0 0 0 4px rgba(47,128,237,.1);
+        }
+
+        .search-button {
+            height: 53px;
+
+            padding: 0 25px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #126ca8;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background: #0d5b8e;
+        }
+
+        /* RESULTAT */
+
+        #result {
+            margin-top: 25px;
+        }
+
+        .result-card {
+            border-radius: 15px;
+
+            padding: 25px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e1e8ee;
+        }
+
+        .result-header {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .result-status {
+            display: inline-flex;
+
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .status-ok {
+            background: #e8f8f1;
+            color: #16805a;
+        }
+
+        .status-warning {
+            background: #fff4df;
+            color: #9a6500;
+        }
+
+        .status-notfound {
+            background: #fcebea;
+            color: #b42318;
+        }
+
+        .vehicle-title {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .vehicle-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+
+            border: 1px solid #e2e8ee;
+
+            border-radius: 12px;
+
+            font-size: 23px;
+        }
+
+        .vehicle-title h3 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .vehicle-title p {
+            margin: 4px 0 0;
+
+            color: #8793a2;
+
+            font-size: 11px;
+        }
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+        }
+
+        .info-item {
+            background: white;
+
+            border: 1px solid #e5ebf0;
+
+            border-radius: 9px;
+
+            padding: 14px;
+        }
+
+        .info-item small {
+            display: block;
+
+            color: #8995a4;
+
+            font-size: 10px;
+
+            margin-bottom: 5px;
+        }
+
+        .info-item strong {
+            font-size: 13px;
+        }
+
+        /* DEMO */
+
+        .demo-notice {
+            margin-top: 20px;
+
+            padding: 13px;
+
+            border-radius: 9px;
+
+            background: #fff8e8;
+
+            border: 1px solid #f0d79e;
+
+            color: #86651c;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+        /* PLAQUES EXEMPLE */
+
+        .examples {
+            margin-top: 25px;
+        }
+
+        .examples h3 {
+            font-size: 13px;
+
+            margin-bottom: 12px;
+        }
+
+        .example-buttons {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+        }
+
+        .example-button {
+            padding: 8px 13px;
+
+            border: 1px solid #d9e1e8;
+
+            border-radius: 7px;
+
+            background: white;
+
+            color: #4e5d6c;
+
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+        .example-button:hover {
+            border-color: #7bb8dc;
+            color: #126ca8;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 600px) {
+
+            .verify-header {
+                padding: 0 17px;
+            }
+
+            .back-dashboard {
+                font-size: 10px;
+            }
+
+            .verify-content {
+                padding: 30px 13px;
+            }
+
+            .search-card {
+                padding: 22px 17px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="verify-page">
+
+    <!-- HEADER -->
+
+    <header class="verify-header">
+
+        <div class="verify-logo">
+
+            <div class="verify-logo-icon">
+                🚔
+            </div>
+
+            PNH <span>CHECK</span>
+
+        </div>
+
+        <a
+            href="dashboard.html"
+            class="back-dashboard"
+        >
+            ← Tableau de bord
+        </a>
+
+    </header>
+
+
+    <!-- CONTENU -->
+
+    <main class="verify-content">
+
+
+        <div class="page-title">
+
+            <h1>
+                Vérifier une plaque
+            </h1>
+
+            <p>
+                Recherchez une plaque dans les données
+                de démonstration du prototype.
+            </p>
+
+        </div>
+
+
+        <!-- RECHERCHE -->
+
+        <section class="search-card">
+
+            <h2>
+                🔎 Recherche de véhicule
+            </h2>
+
+            <p>
+                Saisissez le numéro de plaque ci-dessous.
+            </p>
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="plateInput"
+                    placeholder="Exemple : HT-1234"
+                    maxlength="12"
+                    autocomplete="off"
+                >
+
+                <button
+                    class="search-button"
+                    onclick="verifyPlate()"
+                >
+                    Vérifier
+                </button>
+
+            </div>
+
+
+            <!-- RESULTAT -->
+
+            <div id="result"></div>
+
+
+            <!-- EXEMPLES -->
+
+            <div class="examples">
+
+                <h3>
+                    Plaques de démonstration
+                </h3>
+
+                <div class="example-buttons">
+
+                    <button
+                        class="example-button"
+                        onclick="usePlate('HT-1234')"
+                    >
+                        HT-1234
+                    </button>
+
+                    <button
+                        class="example-button"
+                        onclick="usePlate('HT-5678')"
+                    >
+                        HT-5678
+                    </button>
+
+                    <button
+                        class="example-button"
+                        onclick="usePlate('AA-2026')"
+                    >
+                        AA-2026
+                    </button>
+
+                    <button
+                        class="example-button"
+                        onclick="usePlate('XX-0000')"
+                    >
+                        XX-0000
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- AVERTISSEMENT -->
+
+            <div class="demo-notice">
+
+                🛡️ <strong>Prototype de démonstration :</strong>
+                les véhicules et résultats affichés ici sont
+                entièrement fictifs. Aucune base de données
+                réelle de la PNH n'est utilisée.
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* ==============================
+       DONNÉES FICTIVES
+    ============================== */
+
+    const vehicles = {
+
+        "HT-1234": {
+            vehicle: "Toyota Corolla",
+            type: "Automobile",
+            status: "Enregistré",
+            year: "2022"
+        },
+
+        "HT-5678": {
+            vehicle: "Nissan Frontier",
+            type: "Camionnette",
+            status: "Enregistré",
+            year: "2021"
+        },
+
+        "AA-2026": {
+            vehicle: "Hyundai Tucson",
+            type: "Automobile",
+            status: "À vérifier",
+            year: "2023"
+        }
+
+    };
+
+
+    /* ==============================
+       VERIFICATION
+    ============================== */
+
+    function verifyPlate() {
+
+        const input =
+            document.getElementById("plateInput");
+
+        const result =
+            document.getElementById("result");
+
+        const plate =
+            input.value
+                .trim()
+                .toUpperCase();
+
+
+        if (!plate) {
+
+            result.innerHTML = `
+                <div class="result-card">
+                    <strong>⚠️ Plaque manquante</strong>
+                    <p>
+                        Veuillez saisir un numéro de plaque.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        const vehicle = vehicles[plate];
+
+
+        if (!vehicle) {
+
+            result.innerHTML = `
+
+                <div class="result-card">
+
+                    <div class="result-header">
+
+                        <div class="vehicle-title">
+
+                            <div class="vehicle-icon">
+                                ❓
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Plaque non trouvée
+                                </h3>
+
+                                <p>
+                                    ${escapeHTML(plate)}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <span class="result-status status-notfound">
+                            ● INCONNUE
+                        </span>
+
+                    </div>
+
+                    <p style="font-size:12px;color:#718096;">
+                        Aucun résultat correspondant à cette
+                        plaque dans les données fictives.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        let statusClass =
+            vehicle.status === "Enregistré"
+                ? "status-ok"
+                : "status-warning";
+
+
+        let statusIcon =
+            vehicle.status === "Enregistré"
+                ? "✓"
+                : "⚠";
+
+
+        result.innerHTML = `
+
+            <div class="result-card">
+
+                <div class="result-header">
+
+                    <div class="vehicle-title">
+
+                        <div class="vehicle-icon">
+                            🚗
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                ${escapeHTML(vehicle.vehicle)}
+                            </h3>
+
+                            <p>
+                                Plaque :
+                                <strong>
+                                    ${escapeHTML(plate)}
+                                </strong>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <span class="result-status ${statusClass}">
+                        ${statusIcon} ${escapeHTML(vehicle.status).toUpperCase()}
+                    </span>
+
+                </div>
+
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+
+                        <small>
+                            NUMÉRO DE PLAQUE
+                        </small>
+
+                        <strong>
+                            ${escapeHTML(plate)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <small>
+                            TYPE
+                        </small>
+
+                        <strong>
+                            ${escapeHTML(vehicle.type)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <small>
+                            VÉHICULE
+                        </small>
+
+                        <strong>
+                            ${escapeHTML(vehicle.vehicle)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <small>
+                            ANNÉE
+                        </small>
+
+                        <strong>
+                            ${escapeHTML(vehicle.year)}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ==============================
+       EXEMPLE
+    ============================== */
+
+    function usePlate(plate) {
+
+        document.getElementById(
+            "plateInput"
+        ).value = plate;
+
+        verifyPlate();
+
+    }
+
+
+    /* ENTER */
+
+    document
+        .getElementById("plateInput")
+        .addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+                    verifyPlate();
+                }
+
+            }
+        );
+
+
+    /* SECURITE AFFICHAGE */
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+</script>
+
+</body>
+</html>
